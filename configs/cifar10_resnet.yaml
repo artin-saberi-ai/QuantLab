@@ -1,0 +1,33 @@
+run_name: cifar10_resnet
+seed: 42
+device: cpu
+
+dataset:
+  name: cifar10
+  root: data
+  batch_size: 128
+  num_workers: 0
+
+model:
+  name: resnet20
+
+training:
+  epochs: 40
+  lr: 0.1
+  optimizer: sgd
+  weight_decay: 0.0001
+  log_every: 200
+
+benchmark:
+  runs: 200
+  warmup_runs: 20
+  batch_size: 64
+  device: cpu
+
+quantization:
+  methods: [fp32, fp16, dynamic_int8, static_int8, qat_int8]
+  backend: auto
+  qconfig: per_channel
+  calib_batches: 64
+  qat_epochs: 5
+  qat_lr: 0.0001

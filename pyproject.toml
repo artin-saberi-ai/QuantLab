@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quantlab"
+version = "0.1.0"
+description = "Experimental framework for measuring quantization trade-offs between accuracy, model size, memory and inference latency"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "QuantLab contributors" }]
+keywords = ["quantization", "pytorch", "benchmarking", "int8", "model-compression"]
+dependencies = [
+    "torch>=2.1",
+    "torchvision>=0.16",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4"]
+
+[project.scripts]
+quantlab = "quantlab.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = [
+    "ignore:torch.ao.quantization is deprecated:DeprecationWarning",
+    "ignore:torch.quantize_per_tensor, torch.quantize_per_channel:UserWarning",
+    "ignore:`torch.jit.script` is not supported in Python 3.14+:FutureWarning",
+    "ignore:`torch.jit.load` is not supported in Python 3.14+:FutureWarning",
+    "ignore:`torch.jit.save` is not supported in Python 3.14+:FutureWarning",
+    "ignore:The TorchScript type system doesn't support instance-level annotations:UserWarning",
+]
